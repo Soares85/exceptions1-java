@@ -36,16 +36,10 @@ public class Programa {
             System.out.print("Data de check-out: (dd/MM/yyyy): ");
             checkout = sdf.parse(in.next());
 
-            Date agora = sdf.parse("06/06/2018");
-
-            if(checkin.before(agora) || checkout.before(agora)){
-                System.out.println("Erro na reserva: As datas de reserva para atualização devem ser datas futuras");
-            }
-            else if(!checkout.after(checkin)){
-                System.out.println("Erro na reserva: A data de check-out deve ser posterior à data de check-in");
-            }
-            else {
-                reserva.atualizarData(checkin, checkout);
+            String erro = reserva.atualizarData(checkin, checkout);
+            if(erro != null){
+                System.out.println("Erro na reserva: " + erro);
+            } else {
                 System.out.println("Reserva: " + reserva);
             }
         }

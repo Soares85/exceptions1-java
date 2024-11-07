@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -39,9 +40,20 @@ public class Reserva {
         return TimeUnit.DAYS.convert(diferenca, TimeUnit.MILLISECONDS);
     }
 
-    public void atualizarData(Date checkin, Date checkout){
+    public String atualizarData(Date checkin, Date checkout) throws ParseException {
+
+        Date agora = sdf.parse("06/06/2018");
+
+        if(checkin.before(agora) || checkout.before(agora)){
+            return "As datas de reserva para atualização devem ser datas futuras";
+        }
+        if(!checkout.after(checkin)){
+            return "A data de check-out deve ser posterior à data de check-in";
+        }
+
         this.checkin = checkin;
         this.checkout = checkout;
+        return null;
     }
 
     @Override
